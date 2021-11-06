@@ -1,0 +1,20 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <h3>Reduce Noise</h3>
+    <p>You can reduce noise in your audio file using this.</p>
+    <p> Upload your audio file and Select the Model that you want to use.</p>
+    <p>Then click submit</p>
+    <hr>
+    <form method="POST" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+       {{ form.as_p }}
+        <label>Select the Model</label>
+        <select name="dl_model" id="dl_model">
+            {% for model in models %}
+                <option value="{{ model.name }}">{{ model.name }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" name="Submit">
+    </form>
+{% endblock %}

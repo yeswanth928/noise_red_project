@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <h3>Mix Audio</h3>
+    <p>You can mix two audio files here.</p>
+
+    <form method="POST" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" name="Submit">
+    </form>
+{% endblock %}

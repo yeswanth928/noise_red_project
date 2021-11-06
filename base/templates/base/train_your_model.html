@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <h3>Train Your Model</h3>
+    <p>You can train your won model and save it and use it.</p>
+    <p>Just select the folders in which your clean data and noisy data are present and click submit</p>
+    <p>This can take very long time, Do Not Turn Off your Computer</p>
+    <hr>
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ form.clean_folder.label }}
+        {{ form.clean_folder }}
+        <br>
+        {{ form.noisy_folder }}
+        <input type="submit" name="Submit">
+    </form>
+{% endblock %}
