@@ -5,9 +5,14 @@ from django.contrib import messages
 import os
 
 
-from .functions import trim_audio_fun, generate_spectrogram_fun, extract_audio_fun
+from .functions import trim_audio_fun, generate_spectrogram_fun, extract_audio_fun, noise_reduction_fun
 from .forms import TrimAudioForm, NoiseReductionForm, SpectrogramForm, ExtractAudioForm, TrainModelForm, MixAudioForm
 from .models import TrimAudio, NoiseReduction, MixAudio, ExtractAudio
+
+
+project_name = "project7"
+default_save_location = os.path.expanduser(f'~/Documents/{project_name}')
+models_location = os.path.join(default_save_location, 'models')
 
 
 def home(request):
@@ -16,15 +21,21 @@ def home(request):
 
 
 def noise_reduction(request):
+    form = NoiseReductionForm()
+    context = {'form': form}
     if request.method == 'POST':
         form = NoiseReductionForm(request.POST, request.FILES)
         if form.is_valid():
             new_audio = NoiseReduction(audio_file=request.FILES['audio_file'])
             new_audio.save()
-            return HttpResponse('File uploaded Successfully')
-    else:
-        form = NoiseReductionForm()
-    context = {'form': form}
+            temp_model = request.POST['model']
+            file_name = new_audio.audio_file.name.split('/')
+            file_path = os.path.join(settings.MEDIA_ROOT, new_audio.audio_file.name)
+            model = os.path.join(models_location, temp_model)
+            noise_reduction_fun(
+                model_name=model, file_name=file_name, file_path=file_path, sample_rate=request.POST['sample_rate'])
+            messages.success(request, 'Audio file cleaned Successfully')
+            return render(request, 'base/noise_reduction.html', context=context)
     return render(request, 'base/noise_reduction.html', context)
 
 

@@ -1,4 +1,11 @@
 from django import forms
+import os
+
+
+project_name = "project7"
+default_save_location = os.path.expanduser(f'~/Documents/{project_name}')
+models_location = os.path.join(default_save_location, 'models')
+model = models = [model for model in os.listdir(models_location)]
 
 
 class TrimAudioForm(forms.Form):
@@ -30,6 +37,15 @@ class NoiseReductionForm(forms.Form):
         label='Select the Audio File',
         help_text='max 42 MB',
         allow_empty_file=False
+    )
+    model = forms.ChoiceField(
+        label='Choose the model',
+        choices=((model, model) for model in models),
+    )
+    sample_rate = forms.IntegerField(
+        label="Enter the sample rate",
+        required=False,
+        initial=48000
     )
 
 

@@ -52,7 +52,6 @@ def spectrogram(file_path, save_folder_path, file_name, sample_rate, spectrogram
 
 
 def extract_audio_fun(file_path: str, audio_format: str, file_name: str):
-    #  codec_dict = {"mp4": "libx264", "wav": "libvorbis", "mp3": "pcm_s16le", "ogg": "libvorbis"}
 
     folder_path = create_folder("Extract_Audio")
     new_file_path = os.path.join(folder_path, file_name.split('.')[0]+"."+audio_format)
@@ -61,28 +60,34 @@ def extract_audio_fun(file_path: str, audio_format: str, file_name: str):
     temp_audio.write_audiofile(new_file_path)
 
 
-def data_preprocess(file_path: str):
+def pre_processing(file_path: str):
     audio, _ = tf.audio.decode_wav(tf.io.read_file(file_path), 1)
     audio_len = audio.shape[0]
     batching_size = 12000
     batches = []
+    i = 0
     for i in range(0, audio_len-batching_size, batching_size):
         batches.append(audio[i:i+batching_size])
     batches.append(audio[-batching_size:])
-    diff = audio_len - (i + batching_size)
-    return tf.stack(batches), diff
+    d = audio_len - (i + batching_size)
+    return tf.stack(batches), d
 
 
-def predict(file_path: str, model_path: str):
-    test_data, diff = data_preprocess(file_path)
+def generate_clean_audio(file_path: str, model_path: str):
+    pre_processed_data, diff = pre_processing(file_path)
     model = tf.keras.models.load_model(model_path)
-    predictions = model.predict(test_data)
-    final_op = tf.reshape(predictions[:-1], ((predictions.shape[0] - 1) * predictions.shape[1], 1))
-    final_op = tf.concat((final_op, predictions[-1][-diff:]), axis=0)
-    return final_op
+    temp_out = model.predict(pre_processed_data)
+    temp_out_post = tf.reshape(temp_out[:-1], ((temp_out.shape[0] - 1) * temp_out.shape[1], 1))
+    final_out = tf.concat((temp_out_post, temp_out[-1][-diff:]), axis=0)
+    return final_out
 
 
-def noise_reduction_fun(model_name: str, file_path: str, file_name: str):
+def noise_reduction_fun(model_name: str, file_path: str, file_name: str, sample_rate: int = 48000):
+    folder_path = create_folder(folder_name='noise_reduction')
+    new_file_path = os.path.join(folder_path, file_name)
     model_path = os.path.join(settings.MEDIA_ROOT, model_name)
-    audio_val = predict(file_path, model_path)
-    op = tf.squeeze(audio_val)
+    audio_val = generate_clean_audio(file_path, model_path)
+    output = tf.squeeze(audio_val)
+    encoded_output = tf.audio.encode_wav(output, sample_rate=sample_rate, name=file_name)
+    tf.write_file(new_file_path, encoded_output)
+
