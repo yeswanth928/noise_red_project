@@ -1,12 +1,17 @@
 {% extends 'main.html' %}
-
 {% block content %}
-    <h3>Generate Spectrogram</h3>
-    <p> You can use this to generate spectrogram</p>
-    <p>Spectrogram is extremely useful in a lot of Machine Learning applications involving audio</p>
-    <form method="POST" action="" >
+
+
+    <h3 >Generate Spectrogram</h3>
+    <div class="centerParent">
+    <div class="centerChild">
+
+    <form method="POST" action="">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" name="Submit">
+        <div style="text-align: center;"><input type="submit" name="Submit" class="buttonStyle"></div>
+
     </form>
+            </div>
+    </div>
 {% endblock %}

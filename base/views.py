@@ -2,10 +2,12 @@ from django.shortcuts import render, HttpResponse
 from django.conf import settings
 from django.contrib import messages
 
+
 import os
 
 
-from .functions import trim_audio_fun, generate_spectrogram_fun, extract_audio_fun, noise_reduction_fun
+from .functions import trim_audio_fun, generate_spectrogram_fun, extract_audio_fun
+#noise_reduction_fun, train_model_fun
 from .forms import TrimAudioForm, NoiseReductionForm, SpectrogramForm, ExtractAudioForm, TrainModelForm, MixAudioForm
 from .models import TrimAudio, NoiseReduction, MixAudio, ExtractAudio
 
@@ -20,23 +22,23 @@ def home(request):
     return render(request, 'base/home.html', context)
 
 
-def noise_reduction(request):
-    form = NoiseReductionForm()
-    context = {'form': form}
-    if request.method == 'POST':
-        form = NoiseReductionForm(request.POST, request.FILES)
-        if form.is_valid():
-            new_audio = NoiseReduction(audio_file=request.FILES['audio_file'])
-            new_audio.save()
-            temp_model = request.POST['model']
-            file_name = new_audio.audio_file.name.split('/')
-            file_path = os.path.join(settings.MEDIA_ROOT, new_audio.audio_file.name)
-            model = os.path.join(models_location, temp_model)
-            noise_reduction_fun(
-                model_name=model, file_name=file_name, file_path=file_path, sample_rate=request.POST['sample_rate'])
-            messages.success(request, 'Audio file cleaned Successfully')
-            return render(request, 'base/noise_reduction.html', context=context)
-    return render(request, 'base/noise_reduction.html', context)
+# def noise_reduction(request):
+#     form = NoiseReductionForm()
+#     context = {'form': form}
+#     if request.method == 'POST':
+#         form = NoiseReductionForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             new_audio = NoiseReduction(audio_file=request.FILES['audio_file'])
+#             new_audio.save()
+#             temp_model = request.POST['model']
+#             file_name = new_audio.audio_file.name.split('/')
+#             file_path = os.path.join(settings.MEDIA_ROOT, new_audio.audio_file.name)
+#             model = os.path.join(models_location, temp_model)
+#             noise_reduction_fun(
+#                 model_name=model, file_name=file_name, file_path=file_path, sample_rate=request.POST['sample_rate'])
+#             messages.success(request, 'Audio file cleaned Successfully')
+#             return render(request, 'base/noise_reduction.html', context=context)
+#     return render(request, 'base/noise_reduction.html', context)
 
 
 def trim_audio(request):
@@ -59,15 +61,29 @@ def trim_audio(request):
     return render(request, 'base/trim_audio.html', context)
 
 
-def train_your_model(request):
-    if request.method == 'POST':
-        form = TrainModelForm(request.POST, request.FILES)
-        if form.is_valid():
-            return HttpResponse('Form submitted successfully')
-    else:
-        form = TrainModelForm()
-    context = {'form': form}
-    return render(request, 'base/train_your_model.html', context)
+# def train_your_model(request):
+#     form = TrainModelForm()
+#     context = {'form': form}
+#     if request.method == 'POST':
+#         form = TrainModelForm(request.POST)
+#         if form.is_valid():
+#             clean_folder_path = request.POST['clean_folder']
+#             noisy_folder_path = request.POST['noisy_folder']
+#             train_size = request.POST['train_size']
+#             model_file_name = request.POST['model_file_name']
+#             model_file_path = os.path.join(models_location, model_file_name)
+#             batch_size = request.POST['batch_size']
+#             model_loss = train_model_fun(
+#                 noisy_folder_path=noisy_folder_path,
+#                 clean_folder_path=clean_folder_path,
+#                 train_size=train_size,
+#                 batch_size=batch_size,
+#                 model_file_path=model_file_path
+#             )
+#             messages.success(request, f"Model trained successfully. And the loss is {model_loss}")
+#             return render(request, 'base/train_your_model.html', context)
+#
+#     return render(request, 'base/train_your_model.html', context)
 
 
 def mix_audio(request):

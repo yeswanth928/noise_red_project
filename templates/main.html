@@ -1,20 +1,21 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'styles/main.css' %}">
 </head>
-<body>
-    <h1>Noise Reduction</h1>
-    <nav>
-        <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'noise-reduction' %}">Noise Reduction</a>
-        <a href="{% url 'train-your-model' %}">Custom Model</a>
-        <a href="{% url 'trim-audio' %}">Trimming</a>
-        <a href="{% url 'mix-audio' %}">Audio Mixing</a>
-        <a href="{% url 'extract-audio' %}">Extract Audio</a>
-        <a href="{% url 'generate-spectrogram' %}">Spectrogram Generation</a>
-    </nav>
+<body style="background-image: url('{% static "images/body_background.jpg"%}'); background-size: cover; background-repeat: no-repeat">
+<div >
+    <ul>
+        <li style="float: left"><a disabled="True">Noise Reduction</a></li>
+        <li><a href="{% url 'generate-spectrogram' %}">Spectrogram Generation</a></li>
+        <li><a href="{% url 'extract-audio' %}">Extract Audio</a></li>
+        <li><a href="{% url 'mix-audio' %}">Audio Mixing</a></li>
+        <li><a href="{% url 'trim-audio' %}">Trimming</a></li>
+        <li><a  href="{% url 'home' %}">Home</a></li>
+    </ul>
 
     {% if messages %}
         <ul class="messages">
@@ -28,5 +29,6 @@
 
     {% endblock %}
 
+</div>
 </body>
 </html>

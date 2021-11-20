@@ -2,10 +2,13 @@
 
 {% block content %}
     <h3>Audio Extraction</h3>
-    <p>You can extract audio from MP4 file and then use the application to reduce noise in the audio file</p>
+    <div class="centerParent">
+    <div class="centerChild">
     <form method="POST" action="" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" name="Submit">
+        <div style="text-align: center;"><input type="submit" name="Submit" class="buttonStyle"></div>
     </form>
+    </div>
+    </div>
 {% endblock %}

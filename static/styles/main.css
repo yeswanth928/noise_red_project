@@ -1,0 +1,104 @@
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: right;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  border-right: #333333;
+}
+
+
+li a:hover {
+  background-color: #111;
+}
+
+li a:active{
+  background-color: forestgreen;
+}
+
+div p {
+  color: white;
+
+}
+
+h1 {
+  color: white;
+}
+
+h3 {
+  color: white;
+  text-align: center;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.flex-left-child {
+  flex: 30%;
+}
+
+.flex-middle-child {
+  flex: 40%;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-right-child {
+  flex: 30%;
+
+}
+
+.centerParent{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centerChild {
+  top: 30%;
+  padding-top: 10%;
+}
+
+.centerDiv {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.inputStyle{
+  width: 400px;
+  height: 30px;
+}
+
+.buttonStyle {
+  width: 300px;
+  height: 30px;
+  text-align: center;
+}
+
+.fileStyle {
+  width: 300px;
+  height: 30px;
+  background-color: white;
+  text-align: center;
+}
+
+.selectStyle {
+  width: 200px;
+  height: 20px;
+  background-color: white;
+}

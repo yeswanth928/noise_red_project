@@ -10,32 +10,40 @@ model = models = [model for model in os.listdir(models_location)]
 
 class TrimAudioForm(forms.Form):
     audio_file = forms.FileField(
-        label='Select the audio file',
-        help_text='max 42 megabytes',
-        allow_empty_file=False
+        label='Audio File',
+        allow_empty_file=False,
+        widget=forms.TextInput(attrs={'class': 'inputStyle'})
     )
-    start_time = forms.IntegerField(min_value=0)
-    end_time = forms.IntegerField(min_value=1)
+    start_time = forms.IntegerField(
+        min_value=0,
+        widget=forms.TextInput(attrs={'class': 'inputStyle'})
+    )
+    end_time = forms.IntegerField(
+        min_value=1,
+        widget=forms.TextInput(attrs={'class': 'inputStyle'})
+    )
 
 
 class SpectrogramForm(forms.Form):
     folder_path = forms.CharField(
         label='Enter the folder path',
+        widget=forms.TextInput(attrs={'class': 'inputStyle'})
     )
     spectrogram_type = forms.ChoiceField(
         choices=(("hz", "hz"),
                  ("log", "log"),),
         label='Select Spectrogram type',
+        widget=forms.Select(attrs={'class': 'selectStyle'})
     )
     sample_rate = forms.IntegerField(
-        label='Enter the sample rate'
+        label='Enter the sample rate',
+        widget=forms.TextInput(attrs={'class': 'inputStyle'})
     )
 
 
 class NoiseReductionForm(forms.Form):
     audio_file = forms.FileField(
         label='Select the Audio File',
-        help_text='max 42 MB',
         allow_empty_file=False
     )
     model = forms.ChoiceField(
@@ -52,12 +60,13 @@ class NoiseReductionForm(forms.Form):
 class ExtractAudioForm(forms.Form):
     video_file = forms.FileField(
         label='Select the Video File',
-        help_text='max 42 MB',
-        allow_empty_file=False
+        allow_empty_file=False,
+        widget=forms.FileInput(attrs={'class': 'fileStyle;'})
     )
     audio_format = forms.ChoiceField(
-        label='Select the audio format',
-        choices=(("mp3", "mp3"), ("wav", "wav"), ("ogg", "ogg"))
+        label='Audio Format',
+        choices=(("mp3", "mp3"), ("wav", "wav"), ("ogg", "ogg")),
+        widget=forms.TextInput(attrs={'class': 'inputStyle', 'placeholder': 'Select the audio format'})
     )
 
 
@@ -81,3 +90,18 @@ class TrainModelForm(forms.Form):
         label='Select the Noisy sounds folder path',
         required=True
     )
+    train_size = forms.IntegerField(
+        label='Select the training percentage',
+        required=True,
+        min_value=50,
+        max_value=99
+    )
+    model_file_name = forms.CharField(
+        label='Name of the Model',
+        required=True
+    )
+    batch_size = forms.IntegerField(
+        label='Batch Size',
+        required=False
+    )
+

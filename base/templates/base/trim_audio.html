@@ -1,13 +1,17 @@
 {% extends 'main.html' %}
 
 {% block content %}
-    <h3>Trim an Audio file</h3>
-    <p> When you want to clean only a part of audio file.</p>
-    <p>Trim your audio file and use the trimmed audio file.</p>
-    <hr>
-    <form method="POST" action="" enctype="multipart/form-data">
+    <div class="flex-container">
+
+        <div class="flex-left-child"></div>
+    <div class="flex-middle-child ">
+        <h3>Trim an Audio file</h3>
+    <form method="POST" action="" enctype="multipart/form-data" class="centerDiv">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" name="Submit">
     </form>
+    </div>
+    <div class="flex-right-child"></div>
+    </div>
 {% endblock %}
