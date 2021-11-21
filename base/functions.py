@@ -6,12 +6,12 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 import moviepy.editor as mp
 import os
-#import tensorflow as tf
+import tensorflow as tf
 
 
-#from .train_model import train_and_save_model
+from .train_model import train_and_save_model
 
-project_name = "project7"
+project_name = "noise_reduction"
 default_save_location = os.path.expanduser(f'~/Documents/{project_name}')
 
 
@@ -62,45 +62,45 @@ def extract_audio_fun(file_path: str, audio_format: str, file_name: str):
     temp_audio.write_audiofile(new_file_path)
 
 
-# def pre_processing(file_path: str):
-#     audio, _ = tf.audio.decode_wav(tf.io.read_file(file_path), 1)
-#     audio_len = audio.shape[0]
-#     batching_size = 12000
-#     batches = []
-#     i = 0
-#     for i in range(0, audio_len-batching_size, batching_size):
-#         batches.append(audio[i:i+batching_size])
-#     batches.append(audio[-batching_size:])
-#     d = audio_len - (i + batching_size)
-#     return tf.stack(batches), d
-#
-#
-# def generate_clean_audio(file_path: str, model_path: str):
-#     pre_processed_data, diff = pre_processing(file_path)
-#     model = tf.keras.models.load_model(model_path)
-#     temp_out = model.predict(pre_processed_data)
-#     temp_out_post = tf.reshape(temp_out[:-1], ((temp_out.shape[0] - 1) * temp_out.shape[1], 1))
-#     final_out = tf.concat((temp_out_post, temp_out[-1][-diff:]), axis=0)
-#     return final_out
-#
-#
-# def noise_reduction_fun(model_name: str, file_path: str, file_name: str, sample_rate: int = 48000):
-#     folder_path = create_folder(folder_name='noise_reduction')
-#     new_file_path = os.path.join(folder_path, file_name)
-#     model_path = os.path.join(settings.MEDIA_ROOT, model_name)
-#     audio_val = generate_clean_audio(file_path, model_path)
-#     output = tf.squeeze(audio_val)
-#     encoded_output = tf.audio.encode_wav(output, sample_rate=sample_rate, name=file_name)
-#     tf.write_file(new_file_path, encoded_output)
-#
-#
-# def train_model_fun(
-#         noisy_folder_path: str, clean_folder_path: str, train_size: int, model_file_path: str, batch_size: int = 12000):
-#     model_loss = train_and_save_model(
-#         noisy_folder_path=noisy_folder_path,
-#         clean_folder_path=clean_folder_path,
-#         train_size=train_size,
-#         model_file_path=model_file_path,
-#         batch_size=batch_size
-#     )
-#     return model_loss
+def pre_processing(file_path: str):
+    audio, _ = tf.audio.decode_wav(tf.io.read_file(file_path), 1)
+    audio_len = audio.shape[0]
+    batching_size = 12000
+    batches = []
+    i = 0
+    for i in range(0, audio_len-batching_size, batching_size):
+        batches.append(audio[i:i+batching_size])
+    batches.append(audio[-batching_size:])
+    d = audio_len - (i + batching_size)
+    return tf.stack(batches), d
+
+
+def generate_clean_audio(file_path: str, model_path: str):
+    pre_processed_data, diff = pre_processing(file_path)
+    model = tf.keras.models.load_model(model_path)
+    temp_out = model.predict(pre_processed_data)
+    temp_out_post = tf.reshape(temp_out[:-1], ((temp_out.shape[0] - 1) * temp_out.shape[1], 1))
+    final_out = tf.concat((temp_out_post, temp_out[-1][-diff:]), axis=0)
+    return final_out
+
+
+def noise_reduction_fun(model_name: str, file_path: str, file_name: str, sample_rate: int = 48000):
+    folder_path = create_folder(folder_name='noise_reduction')
+    new_file_path = os.path.join(folder_path, file_name)
+    model_path = os.path.join(settings.MEDIA_ROOT, model_name)
+    audio_val = generate_clean_audio(file_path, model_path)
+    output = tf.squeeze(audio_val)
+    encoded_output = tf.audio.encode_wav(output, sample_rate=sample_rate, name=file_name)
+    tf.write_file(new_file_path, encoded_output)
+
+
+def train_model_fun(
+        noisy_folder_path: str, clean_folder_path: str, train_size: int, model_file_path: str, batch_size: int = 12000):
+    model_loss = train_and_save_model(
+        noisy_folder_path=noisy_folder_path,
+        clean_folder_path=clean_folder_path,
+        train_size=train_size,
+        model_file_path=model_file_path,
+        batch_size=batch_size
+    )
+    return model_loss

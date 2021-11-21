@@ -1,5 +1,59 @@
 {% extends 'main.html' %}
+{% load static %}
 
 {% block content %}
-    <p>Write about the Project. Explain the features</p>
+    <div style="overflow-x:hidden; overflow-y: auto">
+    <div style="display: flex; height: 100%">
+        <div style="flex: 67%; padding-top: 10%; padding-left: 30px; padding-bottom: 22%">
+            <p style="font-max-size: large; font-size: 50px">Noise Reduction Using Deep Learning</p>
+            <p style="font-size: 16px">This application helps you to reduce noise in your audio file using deep learning.</p>
+            <p>We use a convolution neural network to reduce noise.</p>
+        </div>
+        <div style="flex: 33%;padding-top: 10%; ">
+
+        </div>
+    </div>
+    <div style="padding-bottom: 10%;padding-left: 100px; display: grid; grid-template-columns: auto auto auto; grid-row-gap: 40px">
+        <div class="imageView">
+            <p>Noise Reduction</p>
+            <div>
+                <img src="../../../static/images/noise_reduction_example.jpg" alt="Neural Network" class="imageStyle">
+                <p>This app uses a CNN trained with over 6500 white noise files and has an accuracy of 98% to reduce the white noise in audio file</p>
+            </div>
+        </div>
+        <div class="imageView">
+            <p>Training Your Own Model</p>
+            <div>
+                <img src="../../../static/images/neural_network.jpg" alt="Neural Network" class="imageStyle">
+                <p>You can also train using your data and the application automatically saves the model and you can use it in future</p>
+            </div>
+        </div>
+        <div class="imageView">
+            <p>Extract Audio</p>
+            <div>
+                <img src="../../../static/images/video_example.png" alt="Video Example" class="imageStyle">
+                <p>You can extract Audio from video files and use the audio file to reduce noise. You can extract the audio in .ogg, .mp3, .wav formats</p>
+            </div>
+        </div>
+        <div class="imageView">
+            <p>Trimming Audio</p>
+            <div>
+                <img src="../../../static/images/trimming_example.jpg" alt="Video Example" class="imageStyle">
+                <p>You can Trim your Audio files and use only that part where you want noise reduction as Deep learning operations often consume a significant amount of time</p>
+            </div>
+        </div>
+        <div >
+
+        </div>
+        <div class="imageView">
+            <p>Generate Spectrograms</p>
+            <div>
+                <img src="../../../static/images/spectrogram_example.jpg" alt="Video Example" class="imageStyle">
+                <p>
+                    You can generate spectrograms for entire folder of audio files at a time instead of using one audio
+                    file at a time.And You can choose between Hz or Log type</p>
+            </div>
+        </div>
+    </div>
+    </div>
 {% endblock %}

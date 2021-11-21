@@ -81,18 +81,21 @@ h3 {
 
 .inputStyle{
   width: 400px;
+  border-radius: 3px;
   height: 30px;
 }
 
 .buttonStyle {
   width: 300px;
   height: 30px;
+  border-radius: 3px;
   text-align: center;
 }
 
 .fileStyle {
   width: 300px;
   height: 30px;
+  border-radius: 3px;
   background-color: white;
   text-align: center;
 }
@@ -103,3 +106,17 @@ h3 {
   background-color: white;
 }
 
+.imageView {
+  width: 300px;
+  height: 350px;
+  border: 5px solid blueviolet;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+
+.imageStyle {
+  width: 250px;
+  height: 150px;
+  padding: 10px;
+}
