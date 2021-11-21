@@ -1,6 +1,6 @@
-#Noise Reduction using Deep Learning
+# Noise Reduction using Deep Learning
 
-##Introduction
+## Introduction
 Now video and audio are becoming more and more important that the text and images.
 But there's noise everywhere, be it home or public transport etc. But it is necessary for the noise
 to be low. So we have developed an application that uses Deep Learning to reduce the noise, and also allow the
