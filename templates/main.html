@@ -7,12 +7,14 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{% static 'styles/main.css' %}">
 </head>
 <body style="background-image: url('{% static "images/body_background.jpg"%}'); background-size: cover; background-repeat: no-repeat">
-<div >
+<div>
+
     <ul>
         <li style="float: left"><a disabled="True">Noise Reduction</a></li>
         <li><a href="{% url 'generate-spectrogram' %}">Spectrogram Generation</a></li>
+        <li><a href="{% url 'noise-reduction' %}">Noise Reduction</a></li>
+        <li><a href="{% url 'train-your-model' %}">Custom Model</a></li>
         <li><a href="{% url 'extract-audio' %}">Extract Audio</a></li>
-        <li><a href="{% url 'mix-audio' %}">Audio Mixing</a></li>
         <li><a href="{% url 'trim-audio' %}">Trimming</a></li>
         <li><a  href="{% url 'home' %}">Home</a></li>
     </ul>
@@ -24,6 +26,7 @@
             {% endfor %}
         </ul>
     {% endif %}
+
 
     {% block content %}
 

@@ -25,7 +25,7 @@ def create_folder(folder_name: str):
 
 
 def trim_audio_fun(file_path: str, start_time: int, end_time: int, new_file_name: str):
-    folder_path = "Trimming"
+    folder_path = create_folder("Trimming")
     new_file_path = os.path.join(folder_path, new_file_name)
     ffmpeg_extract_subclip(file_path, start_time, end_time, new_file_path)
 

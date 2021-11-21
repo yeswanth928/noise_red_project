@@ -1,17 +1,15 @@
 {% extends 'main.html' %}
 
 {% block content %}
-    <div class="flex-container">
-
-        <div class="flex-left-child"></div>
-    <div class="flex-middle-child ">
         <h3>Trim an Audio file</h3>
+         <div class="centerParent">
+        <div class="centerChild">
     <form method="POST" action="" enctype="multipart/form-data" class="centerDiv">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" name="Submit">
+        <div style="text-align: center;"><input type="submit" name="Submit" class="buttonStyle"></div>
     </form>
     </div>
-    <div class="flex-right-child"></div>
+
     </div>
 {% endblock %}
